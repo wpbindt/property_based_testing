@@ -16,4 +16,9 @@ PropertyTestResult = Failure | Success
 
 
 def run_property_test(property_test: Callable[[], None]) -> PropertyTestResult:
+    try:
+        property_test()
+    except AssertionError:
+        return Failure()
+
     return Success()
