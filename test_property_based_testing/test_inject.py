@@ -8,6 +8,7 @@ def test_run_property_based_test_runs_successful_tests_without_arguments() -> No
 
     assert run_property_test(property_test_that_1_squared_is_one) == Success()
 
+
 def test_run_property_based_test_runs_unsuccessful_tests_without_arguments() -> None:
     def property_test_that_1_squared_is_19() -> None:
         assert square(1) == 19
