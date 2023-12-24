@@ -1,5 +1,3 @@
-import pytest
-
 from property_based_testing.internal import run_property_test, Success
 from test_property_based_testing.code_to_test_with import square
 
