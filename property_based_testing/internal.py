@@ -15,10 +15,14 @@ class Success:
 PropertyTestResult = Failure | Success
 
 
-def run_property_test(property_test: Callable[[], None]) -> PropertyTestResult:
-    try:
-        property_test()
-    except AssertionError:
-        return Failure()
+def run_property_test(
+    property_test: Callable[[], None],
+    iterations: int = 1,
+) -> PropertyTestResult:
+    for _ in range(iterations):
+        try:
+            property_test()
+        except AssertionError:
+            return Failure()
 
     return Success()

@@ -26,3 +26,20 @@ def test_inject_actually_injects_arguments() -> None:
         assert square(a) >= 0
 
     assert run_property_test(property_test_squares_are_nonnegative) == Success()
+
+
+def test_run_property_test_does_multiple_iterations() -> None:
+    integers_to_return = [3, 2, 2]
+
+    def positive_integer() -> int:
+        return integers_to_return.pop()
+
+    @inject(positive_integer)
+    def property_test_all_squares_are_4(a: int) -> None:
+        assert square(a) == 4
+
+    test_result = run_property_test(
+        property_test=property_test_all_squares_are_4,
+        iterations=3,
+    )
+    assert test_result == Failure()
