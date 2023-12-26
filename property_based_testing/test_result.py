@@ -3,7 +3,7 @@ from dataclasses import dataclass
 
 @dataclass(frozen=True)
 class Failure:
-    pass
+    message: str | None = None
 
 
 @dataclass(frozen=True)

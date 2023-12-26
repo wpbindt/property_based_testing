@@ -1,7 +1,7 @@
 from property_based_testing.api import inject
 from property_based_testing.internal import run_property_test, make_property_test
 from property_based_testing.test_result import Failure, Success, PropertyTestResult
-from test_property_based_testing.code_to_test_with import square
+from test_property_based_testing.code_to_test_with import square, broken_square
 
 
 def assert_is_failure(test_result: PropertyTestResult) -> None:
@@ -68,3 +68,18 @@ def test_make_property_test_turns_passing_test_into_success() -> None:
         return
 
     assert property_test_passing_test() == Success()
+
+
+def test_failing_test_propagate_custom_messages() -> None:
+    def negative_integer() -> int:
+        return -30
+
+    custom_failure_message = "The square was not positive"
+
+    @inject(negative_integer)
+    @make_property_test
+    def property_test_squares_are_positive(a: int) -> None:
+        assert broken_square(a) > 0, custom_failure_message
+
+    test_result = run_property_test(property_test=property_test_squares_are_positive)
+    assert test_result == Failure(custom_failure_message)
