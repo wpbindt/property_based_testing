@@ -9,7 +9,7 @@ packages = find_packages(exclude=('tests',))
 
 setup(
     name='property_based_testing',
-    version='0.0.1',
+    version='0.0.2',
     description='property testing',
     long_description='',
     long_description_content_type='text/markdown',

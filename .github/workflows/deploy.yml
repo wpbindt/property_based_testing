@@ -16,6 +16,6 @@ jobs:
         run: |
           touch secrets.env
           echo TWINE_PASSWORD=${{ secrets.TWINE_PASSWORD }} >> secrets.env
-          echo TWINE_USER=${{ secrets.TWINE_USER }} >> secrets.env
+          echo TWINE_USERNAME=${{ secrets.TWINE_USER }} >> secrets.env
       - name: deploy
         run: make deploy
