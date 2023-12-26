@@ -1,18 +1,19 @@
 IMAGE_NAME := property_based_testing
+DOCKER_RUN := docker run -v ${CURDIR}:/srv ${IMAGE_NAME}
 
 image:
 	docker build -t ${IMAGE_NAME} .
 
 mypy:
-	docker run -v ${CURDIR}:/srv ${IMAGE_NAME} mypy .
+	${DOCKER_RUN} mypy .
 
 flake:
-	docker run -v ${CURDIR}:/srv ${IMAGE_NAME} flake8 --ignore E501 .
+	${DOCKER_RUN} flake8 --ignore E501 .
 
 tests:
-	docker run -v ${CURDIR}:/srv ${IMAGE_NAME} pytest -q .
+	${DOCKER_RUN} pytest -q .
 
 deploy:
-	docker run -v ${CURDIR}:/srv ${IMAGE_NAME} ./deploy.sh
+	${DOCKER_RUN} ./deploy.sh
 
 full-pipeline: image mypy tests flake
