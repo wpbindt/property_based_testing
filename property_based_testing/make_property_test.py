@@ -1,11 +1,11 @@
 from typing import Callable
 
-from property_based_testing.dependency import Ts
+from property_based_testing.dependency import Dependencies
 from property_based_testing.test_result import PropertyTestResult, Failure, Success
 
 
-def make_property_test(property_test: Callable[[*Ts], None]) -> Callable[[*Ts], PropertyTestResult]:
-    def wrapped(*args: *Ts) -> PropertyTestResult:
+def make_property_test(property_test: Callable[[*Dependencies], None]) -> Callable[[*Dependencies], PropertyTestResult]:
+    def wrapped(*args: *Dependencies) -> PropertyTestResult:
         try:
             property_test(*args)
         except AssertionError as e:

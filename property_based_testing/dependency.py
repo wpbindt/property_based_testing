@@ -1,4 +1,4 @@
 from typing import TypeVar, TypeVarTuple
 
-T = TypeVar('T')
-Ts = TypeVarTuple('Ts')
+Dependency = TypeVar('Dependency')
+Dependencies = TypeVarTuple('Dependencies')
