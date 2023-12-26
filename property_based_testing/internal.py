@@ -5,13 +5,12 @@ from property_based_testing.test_result import Failure, Success, PropertyTestRes
 
 
 def run_property_test(
-    property_test: Callable[[], None],
+    property_test: Callable[[], PropertyTestResult],
     iterations: int = 1,
 ) -> PropertyTestResult:
     for _ in range(iterations):
-        try:
-            property_test()
-        except AssertionError:
+        test_result = property_test()
+        if test_result == Failure():
             return Failure()
 
     return Success()

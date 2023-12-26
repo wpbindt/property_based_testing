@@ -5,6 +5,7 @@ from test_property_based_testing.code_to_test_with import square
 
 
 def test_run_property_based_test_runs_successful_tests_without_arguments() -> None:
+    @make_property_test
     def property_test_that_1_squared_is_one() -> None:
         assert square(1) == 1
 
@@ -12,6 +13,7 @@ def test_run_property_based_test_runs_successful_tests_without_arguments() -> No
 
 
 def test_run_property_based_test_runs_unsuccessful_tests_without_arguments() -> None:
+    @make_property_test
     def property_test_that_1_squared_is_19() -> None:
         assert square(1) == 19
 
@@ -23,6 +25,7 @@ def test_inject_actually_injects_arguments() -> None:
         return 3
 
     @inject(positive_integer)
+    @make_property_test
     def property_test_squares_are_nonnegative(a: int) -> None:
         assert square(a) >= 0
 
@@ -36,6 +39,7 @@ def test_run_property_test_does_multiple_iterations() -> None:
         return integers_to_return.pop()
 
     @inject(positive_integer)
+    @make_property_test
     def property_test_all_squares_are_4(a: int) -> None:
         assert square(a) == 4
 
