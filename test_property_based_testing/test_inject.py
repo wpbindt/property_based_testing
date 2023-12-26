@@ -90,3 +90,17 @@ def test_failing_test_without_message_does_not_propagate_message() -> None:
 
 def test_run_test_suite_for_empty_test_returns_empty_result_list() -> None:
     assert run_test_suite([]) == []
+
+
+def test_run_test_suite_returns_all_results_in_order() -> None:
+    def property_test_failing_test() -> None:
+        assert False
+
+    def property_test_passing_test() -> None:
+        pass
+
+    expected_result_types = [Failure, Success]
+    actual_results = run_test_suite([property_test_failing_test, property_test_passing_test])
+
+    for actual_result, expected_result_type in zip(actual_results, expected_result_types):
+        assert isinstance(actual_result, expected_result_type)
