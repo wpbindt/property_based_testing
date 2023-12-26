@@ -30,10 +30,11 @@ def run_property_test(
     return Success()
 
 
-def make_property_test(property_test: Callable[[*Ts], None]) -> Callable[[*Ts], Failure]:
-    def wrapped(*args: *Ts) -> Failure:
+def make_property_test(property_test: Callable[[*Ts], None]) -> Callable[[*Ts], PropertyTestResult]:
+    def wrapped(*args: *Ts) -> PropertyTestResult:
         try:
             property_test(*args)
-        finally:
+        except AssertionError:
             return Failure()
+        return Success()
     return wrapped

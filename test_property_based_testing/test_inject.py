@@ -51,3 +51,11 @@ def test_make_property_test_turns_assertion_errors_into_failures() -> None:
         assert False
 
     assert property_test_failing_test() == Failure()
+
+
+def test_make_property_test_turns_passing_test_into_success() -> None:
+    @make_property_test
+    def property_test_passing_test() -> None:
+        return
+
+    assert property_test_passing_test() == Success()
