@@ -12,4 +12,4 @@ flake:
 tests:
 	docker run -v ${CURDIR}:/srv ${IMAGE_NAME} pytest -q /srv
 
-full-pipeline: mypy tests flake
+full-pipeline: image mypy tests flake
