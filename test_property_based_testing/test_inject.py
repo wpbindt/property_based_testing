@@ -1,5 +1,6 @@
 from property_based_testing.api import inject
-from property_based_testing.internal import run_property_test, Success, Failure, make_property_test
+from property_based_testing.internal import run_property_test, make_property_test
+from property_based_testing.test_result import Failure, Success
 from test_property_based_testing.code_to_test_with import square
 
 

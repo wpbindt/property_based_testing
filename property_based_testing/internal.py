@@ -1,20 +1,7 @@
-from dataclasses import dataclass
 from typing import Callable
 
 from property_based_testing.api import Ts
-
-
-@dataclass(frozen=True)
-class Failure:
-    pass
-
-
-@dataclass(frozen=True)
-class Success:
-    pass
-
-
-PropertyTestResult = Failure | Success
+from property_based_testing.test_result import Failure, Success, PropertyTestResult
 
 
 def run_property_test(
