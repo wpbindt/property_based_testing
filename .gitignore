@@ -2,4 +2,4 @@
 __pycache__/
 dist/
 property_based_testing.egg-info
-
+secrets.env
