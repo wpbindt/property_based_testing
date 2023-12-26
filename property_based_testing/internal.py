@@ -1,6 +1,8 @@
 from dataclasses import dataclass
 from typing import Callable
 
+from property_based_testing.api import Ts
+
 
 @dataclass(frozen=True)
 class Failure:
@@ -26,3 +28,12 @@ def run_property_test(
             return Failure()
 
     return Success()
+
+
+def make_property_test(property_test: Callable[[*Ts], None]) -> Callable[[*Ts], Failure]:
+    def wrapped(*args: *Ts) -> Failure:
+        try:
+            property_test(*args)
+        finally:
+            return Failure()
+    return wrapped

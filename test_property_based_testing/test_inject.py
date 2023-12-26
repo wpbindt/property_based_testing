@@ -1,5 +1,5 @@
 from property_based_testing.api import inject
-from property_based_testing.internal import run_property_test, Success, Failure
+from property_based_testing.internal import run_property_test, Success, Failure, make_property_test
 from test_property_based_testing.code_to_test_with import square
 
 
@@ -43,3 +43,11 @@ def test_run_property_test_does_multiple_iterations() -> None:
         iterations=3,
     )
     assert test_result == Failure()
+
+
+def test_make_property_test_turns_assertion_errors_into_failures() -> None:
+    @make_property_test
+    def property_test_failing_test() -> None:
+        assert False
+
+    assert property_test_failing_test() == Failure()
