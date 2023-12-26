@@ -1,7 +1,11 @@
 from property_based_testing.api import inject
 from property_based_testing.internal import run_property_test, make_property_test
-from property_based_testing.test_result import Failure, Success
+from property_based_testing.test_result import Failure, Success, PropertyTestResult
 from test_property_based_testing.code_to_test_with import square
+
+
+def assert_is_failure(test_result: PropertyTestResult) -> None:
+    assert isinstance(test_result, Failure)
 
 
 def test_run_property_based_test_runs_successful_tests_without_arguments() -> None:
@@ -17,7 +21,7 @@ def test_run_property_based_test_runs_unsuccessful_tests_without_arguments() -> 
     def property_test_that_1_squared_is_19() -> None:
         assert square(1) == 19
 
-    assert run_property_test(property_test_that_1_squared_is_19) == Failure()
+    assert_is_failure(run_property_test(property_test_that_1_squared_is_19))
 
 
 def test_inject_actually_injects_arguments() -> None:
@@ -47,7 +51,7 @@ def test_run_property_test_does_multiple_iterations() -> None:
         property_test=property_test_all_squares_are_4,
         iterations=3,
     )
-    assert test_result == Failure()
+    assert_is_failure(test_result)
 
 
 def test_make_property_test_turns_assertion_errors_into_failures() -> None:
@@ -55,7 +59,7 @@ def test_make_property_test_turns_assertion_errors_into_failures() -> None:
     def property_test_failing_test() -> None:
         assert False
 
-    assert property_test_failing_test() == Failure()
+    assert_is_failure(property_test_failing_test())
 
 
 def test_make_property_test_turns_passing_test_into_success() -> None:
