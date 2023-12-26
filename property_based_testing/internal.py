@@ -3,9 +3,11 @@ from typing import Callable
 from property_based_testing.make_property_test import make_property_test
 from property_based_testing.test_result import Failure, Success, PropertyTestResult
 
+FullyInjectedPropertyTest = Callable[[], None]
+
 
 def run_property_test(
-    property_test: Callable[[], None],
+    property_test: FullyInjectedPropertyTest,
     iterations: int = 1,
 ) -> PropertyTestResult:
     actual_property_test = make_property_test(property_test)
