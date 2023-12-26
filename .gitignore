@@ -1,2 +1,5 @@
 .idea/
 __pycache__/
+dist/
+property_based_testing.egg-info
+
