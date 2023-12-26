@@ -13,6 +13,6 @@ tests:
 	docker run -v ${CURDIR}:/srv ${IMAGE_NAME} pytest -q .
 
 deploy:
-	docker run -v ${CURDIR}:/srv ${IMAGE_NAME} python setup.py sdist
+	docker run -v ${CURDIR}:/srv ${IMAGE_NAME} ./deploy.sh
 
 full-pipeline: image mypy tests flake

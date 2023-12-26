@@ -6,5 +6,6 @@ RUN pip install flake8
 RUN pip install setuptools
 RUN pip install types-setuptools
 RUN pip install wheel
+RUN pip install twine
 
 WORKDIR /srv
