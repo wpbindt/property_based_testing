@@ -6,6 +6,16 @@ from property_based_testing.test_result import Failure, Success, PropertyTestRes
 FullyInjectedPropertyTest = Callable[[], None]
 
 
+def run_test_suite(
+    test_suite: list[FullyInjectedPropertyTest],
+    iterations: int = 1,
+) -> list[PropertyTestResult]:
+    return [run_property_test(
+        next(iter(test_suite)),
+        iterations=iterations
+    )]
+
+
 def run_property_test(
     property_test: FullyInjectedPropertyTest,
     iterations: int = 1,
