@@ -86,3 +86,7 @@ def test_failing_test_without_message_does_not_propagate_message() -> None:
 
     test_result = run_property_test_using_suite_runner(property_test=property_test_squares_are_positive)
     assert test_result == Failure(message=None)
+
+
+def test_run_test_suite_for_empty_test_returns_empty_result_list() -> None:
+    assert run_test_suite([]) == []
