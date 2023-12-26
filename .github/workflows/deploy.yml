@@ -1,0 +1,21 @@
+name: deploy
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout repo
+        uses: actions/checkout@main
+      - name: write secrets
+        run: |
+          touch secrets.env
+          echo TWINE_PASSWORD=${{ secrets.TWINE_PASSWORD }} >> secrets.env
+          echo TWINE_USER=${{ secrets.TWINE_USER }} >> secrets.env
+      - name: deploy
+        run: make deploy
