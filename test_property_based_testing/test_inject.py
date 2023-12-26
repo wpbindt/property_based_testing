@@ -83,3 +83,16 @@ def test_failing_test_propagate_custom_messages() -> None:
 
     test_result = run_property_test(property_test=property_test_squares_are_positive)
     assert test_result == Failure(custom_failure_message)
+
+
+def test_failing_test_without_message_does_not_propagate_message() -> None:
+    def negative_integer() -> int:
+        return -30
+
+    @inject(negative_integer)
+    @make_property_test
+    def property_test_squares_are_positive(a: int) -> None:
+        assert broken_square(a) > 0
+
+    test_result = run_property_test(property_test=property_test_squares_are_positive)
+    assert test_result == Failure(message=None)
