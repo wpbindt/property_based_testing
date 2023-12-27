@@ -18,9 +18,5 @@ flake:
 tests:
 	${DOCKER_RUN} pytest -q .
 
-.PHONY: deploy
-deploy: full-pipeline
-	${DOCKER_RUN_WITH_SECRETS} ./deploy.sh
-
 .PHONY: full-pipeline
 full-pipeline: image mypy tests flake

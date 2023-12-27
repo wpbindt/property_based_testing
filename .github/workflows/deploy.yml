@@ -10,10 +10,11 @@ jobs:
     steps:
       - name: checkout repo
         uses: actions/checkout@main
-      - name: write secrets
+      - name: run tests
+        run: make full-pipeline
+      - name: publish package
         run: |
-          touch secrets.env
-          echo TWINE_PASSWORD=${{ secrets.TWINE_PASSWORD }} >> secrets.env
-          echo TWINE_USERNAME=${{ secrets.TWINE_USER }} >> secrets.env
-      - name: deploy
-        run: make deploy
+          pip install setuptools
+          pip install twine
+          python setup.py sdist
+          TWINE_PASSWORD=${{ secrets.TWINE_PASSWORD }} TWINE_USERNAME=${{ secrets.TWINE_USER }} twine upload --non-interactive dist/*
