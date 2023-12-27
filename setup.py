@@ -2,6 +2,7 @@ import pathlib
 
 from setuptools import find_packages, setup
 
+import property_based_testing
 
 here = pathlib.Path(__file__).parent
 
