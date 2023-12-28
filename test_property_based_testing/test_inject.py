@@ -93,8 +93,12 @@ def test_run_test_suite_for_empty_test_returns_empty_result_list() -> None:
 
 
 def test_run_test_suite_returns_results_including_test_names() -> None:
-    def property_test_failing_test() -> None:
-        assert False
+    def positive_integer() -> int:
+        return 3
+
+    @inject(positive_integer)
+    def property_test_failing_test(a: int) -> None:
+        assert a < 0
 
     def property_test_passing_test() -> None:
         pass
