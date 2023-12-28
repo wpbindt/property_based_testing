@@ -11,7 +11,7 @@ TestName = NewType('TestName', str)
 
 def run_test_suite(
     test_suite: list[FullyInjectedPropertyTest],
-    iterations: int = 1,
+    iterations: int = 1000,
 ) -> dict[TestName, PropertyTestResult]:
     return {
         TestName(property_test.__name__): run_property_test(property_test, iterations=iterations)
