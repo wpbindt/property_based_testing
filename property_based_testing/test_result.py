@@ -11,4 +11,6 @@ class Success:
     pass
 
 
-PropertyTestResult = Failure | Success
+@dataclass(frozen=True)
+class PropertyTestResult:
+    result: Failure | Success

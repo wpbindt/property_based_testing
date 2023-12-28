@@ -9,8 +9,8 @@ def make_property_test(property_test: Callable[[*Dependencies], None]) -> Callab
         try:
             property_test(*args)
         except AssertionError as e:
-            return Failure(message=get_message_from_assertion_error(e))
-        return Success()
+            return PropertyTestResult(Failure(message=get_message_from_assertion_error(e)))
+        return PropertyTestResult(Success())
     return wrapped
 
 

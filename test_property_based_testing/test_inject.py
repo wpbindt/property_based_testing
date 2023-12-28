@@ -5,7 +5,7 @@ from test_property_based_testing.code_to_test_with import square, broken_square
 
 
 def assert_is_failure(test_result: PropertyTestResult) -> None:
-    assert isinstance(test_result, Failure)
+    assert isinstance(test_result.result, Failure)
 
 
 def run_property_test_using_suite_runner(
@@ -24,7 +24,7 @@ def test_run_property_based_test_runs_successful_tests_without_arguments() -> No
     def property_test_that_1_squared_is_one() -> None:
         assert square(1) == 1
 
-    assert run_property_test_using_suite_runner(property_test_that_1_squared_is_one) == Success()
+    assert run_property_test_using_suite_runner(property_test_that_1_squared_is_one).result == Success()
 
 
 def test_run_property_based_test_runs_unsuccessful_tests_without_arguments() -> None:
@@ -42,7 +42,7 @@ def test_inject_actually_injects_arguments() -> None:
     def property_test_squares_are_nonnegative(a: int) -> None:
         assert square(a) >= 0
 
-    assert run_property_test_using_suite_runner(property_test_squares_are_nonnegative) == Success()
+    assert run_property_test_using_suite_runner(property_test_squares_are_nonnegative).result == Success()
 
 
 def test_run_property_test_using_suite_runner_does_multiple_iterations() -> None:
@@ -73,7 +73,7 @@ def test_failing_test_propagate_custom_messages() -> None:
         assert broken_square(a) > 0, custom_failure_message
 
     test_result = run_property_test_using_suite_runner(property_test=property_test_squares_are_positive)
-    assert test_result == Failure(custom_failure_message)
+    assert test_result.result == Failure(custom_failure_message)
 
 
 def test_failing_test_without_message_does_not_propagate_message() -> None:
@@ -85,7 +85,7 @@ def test_failing_test_without_message_does_not_propagate_message() -> None:
         assert broken_square(a) > 0
 
     test_result = run_property_test_using_suite_runner(property_test=property_test_squares_are_positive)
-    assert test_result == Failure(message=None)
+    assert test_result.result == Failure(message=None)
 
 
 def test_run_test_suite_for_empty_test_returns_empty_result_list() -> None:
@@ -110,4 +110,4 @@ def test_run_test_suite_returns_results_including_test_names() -> None:
     actual_results = run_test_suite([property_test_failing_test, property_test_passing_test])
 
     for test_name, expected_result_type in expected_result_types.items():
-        assert isinstance(actual_results[test_name], expected_result_type)
+        assert isinstance(actual_results[test_name].result, expected_result_type)

@@ -26,7 +26,7 @@ def run_property_test(
     actual_property_test = make_property_test(property_test)
     for _ in range(iterations):
         test_result = actual_property_test()
-        if isinstance(test_result, Failure):
+        if isinstance(test_result.result, Failure):
             return test_result
 
-    return Success()
+    return PropertyTestResult(Success())
