@@ -8,6 +8,11 @@ def assert_is_failure(test_result: PropertyTestResult) -> None:
     assert isinstance(test_result.result, Failure)
 
 
+def assert_failure_has_message(test_result: PropertyTestResult, expected_message: str | None) -> None:
+    assert isinstance(test_result.result, Failure)
+    assert test_result.result.message == expected_message
+
+
 def run_property_test_using_suite_runner(
     property_test: FullyInjectedPropertyTest,
     iterations: int = 1,
@@ -73,7 +78,7 @@ def test_failing_test_propagate_custom_messages() -> None:
         assert broken_square(a) > 0, custom_failure_message
 
     test_result = run_property_test_using_suite_runner(property_test=property_test_squares_are_positive)
-    assert test_result.result == Failure(custom_failure_message)
+    assert_failure_has_message(test_result, custom_failure_message)
 
 
 def test_failing_test_without_message_does_not_propagate_message() -> None:
@@ -85,7 +90,7 @@ def test_failing_test_without_message_does_not_propagate_message() -> None:
         assert broken_square(a) > 0
 
     test_result = run_property_test_using_suite_runner(property_test=property_test_squares_are_positive)
-    assert test_result.result == Failure(message=None)
+    assert_failure_has_message(test_result, None)
 
 
 def test_run_test_suite_for_empty_test_returns_empty_result_list() -> None:
