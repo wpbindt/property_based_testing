@@ -1,5 +1,5 @@
 from property_based_testing.api import inject
-from property_based_testing.internal import FullyInjectedPropertyTest, run_test_suite
+from property_based_testing.internal import FullyInjectedPropertyTest, run_test_suite, TestName
 from property_based_testing.test_result import Failure, Success, PropertyTestResult
 from test_property_based_testing.code_to_test_with import square, broken_square
 
@@ -16,7 +16,7 @@ def run_property_test_using_suite_runner(
         run_test_suite(
             [property_test],
             iterations=iterations,
-        )
+        ).values()
     ))
 
 
@@ -89,18 +89,21 @@ def test_failing_test_without_message_does_not_propagate_message() -> None:
 
 
 def test_run_test_suite_for_empty_test_returns_empty_result_list() -> None:
-    assert run_test_suite([]) == []
+    assert run_test_suite([]) == dict()
 
 
-def test_run_test_suite_returns_all_results_in_order() -> None:
+def test_run_test_suite_returns_results_including_test_names() -> None:
     def property_test_failing_test() -> None:
         assert False
 
     def property_test_passing_test() -> None:
         pass
 
-    expected_result_types = [Failure, Success]
+    expected_result_types = {
+        TestName(property_test_failing_test.__name__): Failure,
+        TestName(property_test_passing_test.__name__): Success,
+    }
     actual_results = run_test_suite([property_test_failing_test, property_test_passing_test])
 
-    for actual_result, expected_result_type in zip(actual_results, expected_result_types):
-        assert isinstance(actual_result, expected_result_type)
+    for test_name, expected_result_type in expected_result_types.items():
+        assert isinstance(actual_results[test_name], expected_result_type)
