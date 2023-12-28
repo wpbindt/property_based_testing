@@ -25,4 +25,5 @@ setup(
     ],
     packages=packages,
     include_package_data=True,
+    package_data={'property_based_testing': ['py.typed']},
 )
