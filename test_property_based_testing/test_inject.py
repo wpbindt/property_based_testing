@@ -104,8 +104,8 @@ def test_run_test_suite_returns_results_including_test_names() -> None:
         pass
 
     expected_result_types = {
-        TestName(property_test_failing_test.__name__): Failure,
-        TestName(property_test_passing_test.__name__): Success,
+        TestName('property_test_failing_test'): Failure,
+        TestName('property_test_passing_test'): Success,
     }
     actual_results = run_test_suite([property_test_failing_test, property_test_passing_test])
 
